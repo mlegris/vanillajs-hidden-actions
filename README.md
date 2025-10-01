@@ -1,6 +1,11 @@
 # vanillajs-hidden-actions
 A simple re-usable component that allows you to add hidden actions behind items in a grid or list. The actions are configurable, as well as the icons representing them. 
 
+
+https://github.com/user-attachments/assets/c7dcbf78-8b74-4481-b27f-7fee362be11f
+
+
+
 # USAGE
 ```javascript
 import { Rater } from './js/Rater.js';

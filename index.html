@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="css/rating.css">
     <style>
         body { font-family: 'Alan Sans', sans-serif; margin: 0; padding: 0; }
+        div#messages { margin-top: 3em; background-color: #efefef; color: #2c2a2a; padding: 1em; }
+        div#messages > span { display: block; margin-bottom: 0.5em;}
     </style>
 </head>
 <body>
@@ -23,6 +25,7 @@
     <div class="track" provider="DEEZER" externalid="128227977" artistid="5"><div class="image"><img loading="lazy" src="https://cdn-images.dzcdn.net/images/cover/63a84fc7217f043e00511b1d16b40475/500x500-000000-80-0-0.jpg"></div><div class="details"><span class="artist">Damien Robitaille</span><span class="title">Homme autonome</span></div></div>
     <div class="track" provider="DEEZER" externalid="130454206" artistid="3"><div class="image"><img loading="lazy" src="https://cdn-images.dzcdn.net/images/cover/93fd31bc82c53f8b28410bcc03bbca25/500x500-000000-80-0-0.jpg"></div><div class="details"><span class="artist">Émile Bilodeau</span><span class="title">J'en ai plein mon cass</span></div></div>
 </div>
+<div id="messages"></div>
 <script>
     const relative = "./";
 </script>
@@ -42,6 +45,11 @@
 
     function ratingDone(e)
     {
+        const trackEl = e.el;
+        const entity = e.entity;
+        const artist = trackEl.querySelector("span.artist").innerText;
+        const title = trackEl.querySelector("span.title").innerText;
+
         if(e.entity === "artist" && e.perc < 0)
         {
             const artistId = parseInt(e.el.getAttribute("artistid"));
@@ -49,12 +57,34 @@
             trackEls.forEach(function(trackEl) {
                 trackEl.parentNode.removeChild(trackEl);
             });
+            addMessage("you disliked `"+artist+"`");
         }
         else if(e.entity === "track" && e.perc < 0)
         {
-            const trackEl = e.el;
             trackEl.parentNode.removeChild(trackEl);
+            addMessage("you disliked `"+title+"` by `"+artist+"`");
         }
+        else if(e.perc > 0)
+        {
+            if(entity === "share")
+                addMessage("you want to share `"+title+"` by `"+artist+"`");
+            else if(entity === "artist")
+                addMessage("you liked `"+artist+"`");
+            else if(entity === "track")
+                addMessage("you liked `"+title+"` by `"+artist+"`");
+        }
+    }
+
+    function addMessage(msg)
+    {
+        const contEl = document.querySelector("div#messages");
+        const msgEl = document.createElement("span");
+        const textEl = document.createTextNode(msg);
+        msgEl.appendChild(textEl);
+        contEl.appendChild(msgEl);
+        setTimeout(function() {
+            msgEl.parentNode.removeChild(msgEl);
+        }, 3000);
     }
 
     function ratingStart(e)

@@ -1,0 +1,27 @@
+div.track { font-size: 1.2em; vertical-align: center; padding: 0.5em; display: flex; box-sizing: border-box; cursor: pointer; }
+div.track:hover:not([selected]) { background: #25384C; background: linear-gradient(180deg,rgba(37, 56, 76, 1) 0%, rgba(16, 24, 32, 1) 100%); color: #EFEFEF; border-radius:0.5em;}
+div.track div.image { overflow: hidden; display: inline-block; width: 3em; height: 3em; border-radius: 0.25em; margin-right: 0.5em; position: relative; flex-shrink: 0; }
+div.image > img { max-width: 100%; margin: auto; display: block; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+div.track > span { display: inline-block; }
+div.track span.artist { font-size: 1.1em; margin-left: 0.25em; margin-right: 0.5em; display: block; font-weight: bold;}
+div.track span.title { font-size:0.9em; margin-left: 0.25em; }
+div.track[selected] { background-color: #101820; color: #FBE300; }
+div.track[rating] { background-color: #101820; color: #FBE300; }
+div.track > * { pointer-events: none; user-select: none; }
+div#tracks > div.placeHolder, div.tracks > div.placeHolder
+{
+    height: 4.8em;
+    box-sizing: border-box;
+}
+@media only screen and (min-width: 0px) and (max-width: 480px) {
+    div#tracks {
+        width: 100vw;
+    }
+}
+
+@media only screen and (min-width: 481px)
+{
+    div#tracks {
+        width: 30em;
+    }
+}

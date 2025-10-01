@@ -1,0 +1,11 @@
+div.rating {  }
+div.rating > div.content { display: flex; color: white; height: 100%; width: 100%; }
+div.rating > div.content > div { overflow: hidden; width: 50%; height: 100%; flex-shrink: 0; display: flex; box-sizing: border-box; }
+div.positive { background-color: green; flex-direction: row; }
+div.positive > img.what { margin-left: 0.25em; }
+div.negative > img.what { margin-right: 0.25em; }
+div.rating > div.content > div > img { height: 100%; max-width: 25%; box-sizing: border-box; }
+div.rating > div.content > div > img:first-of-type { padding: 0.5em; }
+div.rating img.what { filter: invert(1); opacity: 0.9; padding: 0.25em; }
+div.negative { background-color: red; flex-direction: row-reverse; }
+body > div.ratingCont > div[released] { transition: left 0.5s; transition-timing-function: ease-out; }

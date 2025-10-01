@@ -1,0 +1,66 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <link rel="stylesheet" href="css/tracks.css">
+    <link rel="stylesheet" href="css/rating.css">
+    <style>
+        body { font-family: 'Alan Sans', sans-serif; margin: 0; padding: 0; }
+    </style>
+</head>
+<body>
+<div id="tracks">
+    <div class="track" provider="DEEZER" externalid="392859522" artistid="1"><div class="image"><img loading="lazy" src="https://cdn-images.dzcdn.net/images/cover/c5f9cd849a1af55d76e3a166a4f8b6ee/500x500-000000-80-0-0.jpg"></div><div class="details"><span class="artist">Jason Bajada</span><span class="title">Final Breath</span></div></div>
+    <div class="track" provider="DEEZER" externalid="851329232" artistid="2"><div class="image"><img loading="lazy" src="https://cdn-images.dzcdn.net/images/cover/4ea183c45f5cf132b230148e03b60f2e/500x500-000000-80-0-0.jpg"></div><div class="details"><span class="artist">Bobby Bazini</span><span class="title">Choose You</span></div></div>
+    <div class="track" provider="DEEZER" externalid="1439421482" artistid="3"><div class="image"><img loading="lazy" src="https://cdn-images.dzcdn.net/images/cover/2793e1c33347a20c17cae2893d2e5658/500x500-000000-80-0-0.jpg"></div><div class="details"><span class="artist">Émile Bilodeau</span><span class="title">Ma maladie mentale</span></div></div>
+    <div class="track" provider="DEEZER" externalid="669945572" artistid="3"><div class="image"><img loading="lazy" src="https://cdn-images.dzcdn.net/images/cover/ebb7fe641c15e30e4c89ac6ea881a307/500x500-000000-80-0-0.jpg"></div><div class="details"><span class="artist">Émile Bilodeau</span><span class="title">Candy</span></div></div>
+    <div class="track" provider="DEEZER" externalid="1497806182" artistid="4"><div class="image"><img loading="lazy" src="https://cdn-images.dzcdn.net/images/cover/9516773e1e6e89109793a1d5fcac3f36/500x500-000000-80-0-0.jpg"></div><div class="details"><span class="artist">Laurence St-Martin</span><span class="title">Sans toi</span></div></div>
+    <div class="track" provider="DEEZER" externalid="128227977" artistid="5"><div class="image"><img loading="lazy" src="https://cdn-images.dzcdn.net/images/cover/63a84fc7217f043e00511b1d16b40475/500x500-000000-80-0-0.jpg"></div><div class="details"><span class="artist">Damien Robitaille</span><span class="title">Homme autonome</span></div></div>
+    <div class="track" provider="DEEZER" externalid="130454206" artistid="3"><div class="image"><img loading="lazy" src="https://cdn-images.dzcdn.net/images/cover/93fd31bc82c53f8b28410bcc03bbca25/500x500-000000-80-0-0.jpg"></div><div class="details"><span class="artist">Émile Bilodeau</span><span class="title">J'en ai plein mon cass</span></div></div>
+</div>
+<script>
+    const relative = "./";
+</script>
+<script type="module">
+    import { Rater } from './js/Rater.js';
+
+    const thresholds = {
+        20 : { name: "track", imgUrl: "images/track.svg", entity: "track"},
+        31 : { name: "artist", imgUrl: "images/artist.svg", entity: "artist"},
+        42:  { name: "share", imgUrl: "images/forward.svg", dislike: false, entity: "share" }
+    };
+
+    const contEl = document.querySelector("div#tracks");
+    const rater = new Rater(contEl, "div.track", 13, 50, thresholds, { applyHeight: true });
+    rater.addEventListener(Rater.rated, ratingDone);
+    rater.addEventListener(Rater.rating, ratingStart);
+
+    function ratingDone(e)
+    {
+        if(e.entity === "artist" && e.perc < 0)
+        {
+            const artistId = parseInt(e.el.getAttribute("artistid"));
+            const trackEls = document.querySelectorAll("div.track[artistid='"+artistId+"']");
+            trackEls.forEach(function(trackEl) {
+                trackEl.parentNode.removeChild(trackEl);
+            });
+        }
+        else if(e.entity === "track" && e.perc < 0)
+        {
+            const trackEl = e.el;
+            trackEl.parentNode.removeChild(trackEl);
+        }
+    }
+
+    function ratingStart(e)
+    {
+        console.log("rating start", e);
+    }
+</script>
+</body>
+</html>

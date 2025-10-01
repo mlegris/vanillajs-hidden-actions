@@ -1,6 +1,44 @@
 # vanillajs-hidden-actions
 A simple re-usable component that allows you to add hidden actions behind items in a grid or list. The actions are configurable, as well as the icons representing them. 
 
+# USAGE
+```javascript
+import { Rater } from './js/Rater.js';
+
+const thresholds = {
+    20 : { name: "track", imgUrl: "images/track.svg", entity: "track"},
+    31 : { name: "artist", imgUrl: "images/artist.svg", entity: "artist"},
+    42:  { name: "share", imgUrl: "images/forward.svg", dislike: false, entity: "share" }
+};
+
+const contEl = document.querySelector("div#tracks");
+const rater = new Rater(contEl, "div.track", 13, 50, thresholds, { applyHeight: true });
+rater.addEventListener(Rater.rated, ratingDone);
+rater.addEventListener(Rater.rating, ratingStart);
+
+function ratingDone(e)
+{
+    if(e.entity === "artist" && e.perc < 0)
+    {
+        const artistId = parseInt(e.el.getAttribute("artistid"));
+        const trackEls = document.querySelectorAll("div.track[artistid='"+artistId+"']");
+        trackEls.forEach(function(trackEl) {
+            trackEl.parentNode.removeChild(trackEl);
+        });
+    }
+    else if(e.entity === "track" && e.perc < 0)
+    {
+        const trackEl = e.el;
+        trackEl.parentNode.removeChild(trackEl);
+    }
+}
+
+function ratingStart(e)
+{
+    console.log("rating start", e);
+}
+```
+
 # CREDITS
 I developed it while working on Troove.
 

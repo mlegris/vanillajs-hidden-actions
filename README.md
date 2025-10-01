@@ -1,6 +1,5 @@
 # vanillajs-hidden-actions
-A simple re-usable component that allows you to add hidden actions behind items in a grid or list. The actions are configurable, as well as the icons representing them. You can see it in action here: 
-https://troove.app/examples/rater/
+A simple re-usable component that allows you to add hidden actions behind items in a grid or list. The actions are configurable, as well as the icons representing them. You can try it by simply move items left/right with your mouse or touch : https://troove.app/examples/rater/
 
 # DEMONSTRATION
 I apologive for the quality of the video, the component is actually smooth.
